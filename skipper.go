@@ -6,13 +6,13 @@ import (
 )
 
 // SkipperFunc 定义中间件跳过函数
-type SkipperFunc func(ReqContext) bool
+type SkipperFunc func(Context) bool
 
 // HandlerFunc ...
-type HandlerFunc func(ReqContext)
+type HandlerFunc func(Context)
 
 // SkipHandler 统一处理跳过函数
-func SkipHandler(c ReqContext, skippers ...SkipperFunc) bool {
+func SkipHandler(c Context, skippers ...SkipperFunc) bool {
 	for _, skipper := range skippers {
 		if skipper(c) {
 			return true
@@ -23,14 +23,14 @@ func SkipHandler(c ReqContext, skippers ...SkipperFunc) bool {
 
 // EmptyMiddleware 不执行业务处理的中间件
 func EmptyMiddleware() HandlerFunc {
-	return func(c ReqContext) {
+	return func(c Context) {
 		c.Next() // Pass, 跳过
 	}
 }
 
 // AllowPathPrefixSkipper 检查请求路径是否包含指定的前缀，如果包含则跳过
 func AllowPathPrefixSkipper(prefixes ...string) SkipperFunc {
-	return func(c ReqContext) bool {
+	return func(c Context) bool {
 		path := c.GetRequest().URL.Path
 		pathLen := len(path)
 
@@ -45,7 +45,7 @@ func AllowPathPrefixSkipper(prefixes ...string) SkipperFunc {
 
 // AllowPathPrefixNoSkipper 检查请求路径是否包含指定的前缀，如果包含则不跳过
 func AllowPathPrefixNoSkipper(prefixes ...string) SkipperFunc {
-	return func(c ReqContext) bool {
+	return func(c Context) bool {
 		path := c.GetRequest().URL.Path
 		pathLen := len(path)
 
@@ -60,7 +60,7 @@ func AllowPathPrefixNoSkipper(prefixes ...string) SkipperFunc {
 
 // AllowMethodAndPathPrefixSkipper 检查请求方法和路径是否包含指定的前缀，如果不包含则跳过
 func AllowMethodAndPathPrefixSkipper(prefixes ...string) SkipperFunc {
-	return func(c ReqContext) bool {
+	return func(c Context) bool {
 		creq := c.GetRequest()
 		path := JoinRouter(creq.Method, creq.URL.Path)
 		pathLen := len(path)
