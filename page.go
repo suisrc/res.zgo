@@ -2,10 +2,10 @@ package res
 
 // PageParam 分页查询条件
 type PageParam struct {
-	PageSign string `query:"pageSign"`            // 请求参数, total | list | both
-	PageNo   uint   `query:"pageNo,default=1"`    // 当前页
-	PageSize uint   `query:"pageSize,default=20"` // 页大小 binding:"max=100"
-	Total    uint   `query:"total"`               // 上次统计的数据条数
+	PageSign string `form:"pageSign"`            // 请求参数, total | list | both
+	PageNo   uint   `form:"pageNo,default=1"`    // 当前页
+	PageSize uint   `form:"pageSize,default=20"` // 页大小 binding:"max=100"
+	Total    uint   `form:"total"`               // 上次统计的数据条数
 }
 
 // PageResult 分页数据
