@@ -11,8 +11,8 @@ type PageParam struct {
 // PageResult 分页数据
 type PageResult struct {
 	PageSign string      `json:"pageSign,default=both,omitempty"` // 请求参数, total | list | both
-	PageNo   int         `json:"pageNo,omitempty"`                // 页索引
-	PageSize int         `json:"pageSize,omitempty"`              // 页条数
-	Total    int         `json:"total,omitempty"`                 // 总条数
+	PageNo   uint        `json:"pageNo,omitempty"`                // 页索引
+	PageSize uint        `json:"pageSize,omitempty"`              // 页条数
+	Total    uint        `json:"total,omitempty"`                 // 总条数
 	List     interface{} `json:"list,omitempty"`                  // 数据
 }
