@@ -16,3 +16,19 @@ type PageResult struct {
 	Total    uint        `json:"total,omitempty"`                 // 总条数
 	List     interface{} `json:"list,omitempty"`                  // 数据
 }
+
+func (p *PageParam) First() uint {
+	f := (p.PageNo - 1) * p.PageSize
+	if f < 0 {
+		return 0
+	}
+	return f
+}
+
+func (p *PageParam) Max() uint {
+	m := p.PageSize
+	if m < 1 {
+		return 1
+	}
+	return m
+}
